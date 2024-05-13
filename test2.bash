@@ -1,0 +1,2 @@
+curl -X POST -H "Content-Type: application/json" -d '{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkN1c3
+                                                                                                    3RvbWVyIiwiaWF0IjoxNzE1MzQxMTE1LCJleHAiOjE3MTUzNDExMjV9.p5HZmZuV2oQS2keW9ELnBcqq-uOlodCqRh0H9Ic5QcU" }' http://localhost:3000/api/verifyjwt

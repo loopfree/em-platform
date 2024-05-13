@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password      String
+  role          String?
+  referral_code String?
+  referred_by   Int?
+  points        Int?
+  pointsList    Points[]
+  transactions  Transactions[]
+  reviews       Reviews[]
+}
+
+model Event {
+  id            Int           @id @default(autoincrement())
+  organizer_id  Int?
+  categories    String?
+  location      String?
+  description   String?
+  name          String
+  price         Int?
+  date          DateTime?
+  seat          Int?
+  available_seat Int?
+  ticket_types  String?
+  vouchers      Voucher[]
+  discounts     Discount[]
+  transactions  Transactions[]
+  reviews       Reviews[]
+}
+
+model Voucher {
+  id             Int     @id @default(autoincrement())
+  event_id       Int
+  voucher_limit  Int?
+  voucher_percent Int?
+  event          Event   @relation(fields: [event_id], references: [id])
+}
+
+model Discount {
+  id             Int     @id @default(autoincrement())
+  event_id       Int
+  discount_start DateTime
+  discount_end   DateTime
+  discount_percent Int?
+  event          Event   @relation(fields: [event_id], references: [id])
+}
+
+model Points {
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  point        Int
+  expired_date DateTime
+  user         User     @relation(fields: [user_id], references: [id])
+}
+
+model Transactions {
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  event_id     Int
+  paid_amount  Int
+  create_date  DateTime
+  user         User     @relation(fields: [user_id], references: [id])
+  event        Event    @relation(fields: [event_id], references: [id])
+}
+
+model Reviews {
+  id       Int    @id @default(autoincrement())
+  user_id  Int
+  event_id Int
+  rating   Int
+  comment  String?
+  user     User   @relation(fields: [user_id], references: [id])
+  event    Event  @relation(fields: [event_id], references: [id])
+}
+
+model TransactionData {
+  id String @id
+  count Int
+  type String?
+}
