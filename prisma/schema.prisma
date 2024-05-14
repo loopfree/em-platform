@@ -21,6 +21,7 @@ model User {
   referral_code String?
   referred_by   Int?
   points        Int?
+  expired_date  DateTime?
   pointsList    Points[]
   transactions  Transactions[]
   reviews       Reviews[]

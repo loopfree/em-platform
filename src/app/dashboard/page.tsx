@@ -87,6 +87,10 @@ export default function Dashboard() {
           router.push("/signin");
         }
 
+        if (role === null) {
+          router.push("/signin");
+        }
+
         const mostSoldResponse = await fetch("/api/getMostSold/" + id);
 
         const mostSoldEvents = await mostSoldResponse.json();

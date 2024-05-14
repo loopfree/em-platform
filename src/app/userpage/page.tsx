@@ -24,6 +24,10 @@ export default function UserPage() {
     if (role === "EO") {
       router.push("/dashboard");
     }
+
+    if (role === null) {
+      router.push("/signin");
+    }
   })();
 
   return (

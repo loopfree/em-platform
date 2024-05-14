@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      if (findReferrer !== null) {
+      if (findReferrer === null) {
         return NextResponse.json(
           {
             status: "failed",
@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
             role: "Customer",
             referral_code: generateReferralCode(email),
             referred_by: findReferrer!.id,
+            expired_date: expiredDate,
           },
         });
       });

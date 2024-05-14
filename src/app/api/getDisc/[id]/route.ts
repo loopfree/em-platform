@@ -4,13 +4,22 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest) {
-  const { id } = await req.json();
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   try {
     const checkUserReferrer = await prisma.user.findUnique({
       where: {
-        id: id,
+        id: parseInt(id),
+        expired_date: {
+          gt: today,
+        },
       },
       select: {
         referred_by: true,
